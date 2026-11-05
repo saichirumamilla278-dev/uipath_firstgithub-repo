@@ -19,7 +19,7 @@ steps:
   displayName: 'Run a multi-line script'
 - task: UiPathPack@6
   inputs:
-    projectJsonPath: '$(Build.SourceDirectory)'
+    projectJsonPath: '$(Build.SourcesDirectory)'
     versionType: 'AutoVersion'
     outputPath: '$(Build.ArtifactStagingDirectory)\Output'
 - task: PublishBuildArtifacts@1
