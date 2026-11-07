@@ -22,8 +22,20 @@ steps:
     projectJsonPath: '$(Build.SourcesDirectory)'
     versionType: 'AutoVersion'
     outputPath: '$(Build.ArtifactStagingDirectory)\drop'
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Write your PowerShell commands here.
+      
+      Get-ChildItem "$(Build.ArtifactStagingDirectory)\drop" -Recurse -Filter *.nupkg
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+- task: UiPathDeploy@6
+  inputs:
+    orchestratorConnection: 'UiPath Orch'
+    packagesPath: '$(Build.ArtifactStagingDirectory)\drop'
+    folderName: 'AzureCICD'
